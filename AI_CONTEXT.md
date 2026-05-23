@@ -1,9 +1,6 @@
 # Dart RSS Context
 
-Last researched: 2026-05-22.
-
-`dart-rss` is a forked RSS and Atom parsing package. The Dart package name is
-`dart_rss`.
+Last researched: 2026-05-23.
 
 ## Role
 
@@ -42,20 +39,9 @@ part of RSS source fetching and item parsing.
 - Coverage includes Atom, RSS 1.0, RSS 2.0, invalid XML, media modules, Dublin
   Core, iTunes, Podcast Index, and date parsing.
 
-## Modernization Guidance
-
-- This package is still constrained to Dart `<3.0.0`; SDK modernization should
-  be a dedicated slice.
-- Preserve existing public class names, constructors, and parse APIs until app
-  callers and package tests are migrated.
-- Keep RSS version detection and module parsing behavior fixture-driven. Add or
-  update XML fixtures before changing parser behavior.
-- Do not remove upstream fork context lightly; remotes include a fork origin and
-  an upstream webfeed repository.
-
 ## Validation
 
-Run from `dart-rss/`:
+Run from `dart_rss/`:
 
 - `dart pub get`
 - `dart format .`

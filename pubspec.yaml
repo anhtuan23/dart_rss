@@ -5,7 +5,7 @@ homepage: https://github.com/anhtuan23/dart_rss
 environment:
   sdk: ^3.0.0
 dependencies:
-  xml: ^7.0.1
+  xml: ^6.6.1
   http: ^1.6.0
   intl: ^0.20.2
 

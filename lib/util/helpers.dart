@@ -5,7 +5,7 @@ import 'package:xml/xml.dart';
 XmlElement? findElementOrNull(XmlElement element, String name,
     {String? namespace}) {
   try {
-    return element.findAllElements(name, namespaceUri: namespace).first;
+    return element.findAllElements(name, namespace: namespace).first;
   } on StateError {
     return null;
   }
@@ -14,7 +14,7 @@ XmlElement? findElementOrNull(XmlElement element, String name,
 List<XmlElement>? findAllDirectElementsOrNull(XmlElement element, String name,
     {String? namespace}) {
   try {
-    return element.findElements(name, namespaceUri: namespace).toList();
+    return element.findElements(name, namespace: namespace).toList();
   } on StateError {
     return null;
   }

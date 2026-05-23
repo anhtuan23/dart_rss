@@ -39,11 +39,13 @@ part of RSS source fetching and item parsing.
 ## Modernization Guidance
 
 - Dependency modernization on 2026-05-23 moved this package to current Dart 3
-  compatible constraints: `xml ^7.0.1`, `http ^1.6.0`, `intl ^0.20.2`,
+  compatible constraints: `xml ^6.6.1`, `http ^1.6.0`, `intl ^0.20.2`,
   `test ^1.31.1`, and `lints ^6.1.0`.
-- XML 7 deprecates `XmlElement.text` and the `namespace` named argument. Parser
-  code now uses `innerText` to preserve descendant-text behavior and
-  `namespaceUri` for namespace-aware element lookup.
+- `xml` stays on the 6.6 line because Readdict's Flutter graph also depends on
+  `image`, and the latest XML 7-compatible `image` release currently requires a
+  newer `meta` than the active Flutter SDK pins through `flutter_test`.
+- Parser code uses `innerText` instead of `text` to preserve descendant-text
+  behavior when reading nested XML content.
 
 ## Tests And Fixtures
 

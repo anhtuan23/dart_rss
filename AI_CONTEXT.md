@@ -26,10 +26,10 @@ part of RSS source fetching and item parsing.
 
 - The package exports many domain model classes directly from
   `lib/dart_rss.dart`.
-- `RssVersion` and `UpdatePeriod` intentionally keep their original enum value
-  names for public API compatibility. `analysis_options.yaml` disables
-  `constant_identifier_names` for this package instead of forcing a breaking
-  rename during dependency modernization.
+- `RssVersion` and `UpdatePeriod` use lower-camel enum values after the
+  2026-05-23 breaking modernization. Older callers must migrate from values
+  such as `RssVersion.RSS1` and `UpdatePeriod.Hourly` to `RssVersion.rss1` and
+  `UpdatePeriod.hourly`.
 - `lib/domain/dart_rss.dart` adds a higher-level `WebFeed` wrapper that can
   detect feed version, parse XML strings, normalize RSS/Atom data, and fetch a
   feed from a URL through `http`.

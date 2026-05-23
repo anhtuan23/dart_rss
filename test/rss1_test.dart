@@ -28,7 +28,7 @@ void main() {
 
   test('parse RSS1 with syndication module', () {
     final xmlString =
-    File('test/xml/RSS1-with-syndication-module.xml').readAsStringSync();
+        File('test/xml/RSS1-with-syndication-module.xml').readAsStringSync();
     final feed = Rss1Feed.parse(xmlString);
 
     expect(feed.title, 'Meerkat');
@@ -42,7 +42,7 @@ void main() {
 
   test('parse RSS1 with dublin core module', () {
     final xmlString =
-    File('test/xml/RSS1-with-dublin-core-module.xml').readAsStringSync();
+        File('test/xml/RSS1-with-dublin-core-module.xml').readAsStringSync();
     final feed = Rss1Feed.parse(xmlString);
 
     expect(feed.title, 'Meerkat');
@@ -72,7 +72,7 @@ void main() {
 
   test('parse RSS1 with content module', () {
     final xmlString =
-    File('test/xml/RSS1-with-content-module.xml').readAsStringSync();
+        File('test/xml/RSS1-with-content-module.xml').readAsStringSync();
     final feed = Rss1Feed.parse(xmlString);
 
     expect(feed.title, 'Example Feed');

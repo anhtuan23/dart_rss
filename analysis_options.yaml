@@ -1,1 +1,8 @@
-include: package:pedantic/analysis_options.yaml
+include: package:lints/recommended.yaml
+
+linter:
+  rules:
+    # dart_rss exposes these enum values as part of its public API. Keep the
+    # original names during dependency modernization so downstream callers do
+    # not need a breaking migration just to consume the latest package stack.
+    constant_identifier_names: false

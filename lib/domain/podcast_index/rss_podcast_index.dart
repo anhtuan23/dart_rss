@@ -21,7 +21,8 @@ class RssPodcastIndex {
       funding: element.findElements('podcast:funding').map((e) {
         return RssPodcastIndexFunding.parse(e);
       }).toList(),
-      locked: RssPodcastIndexLocked.parse(findElementOrNull(element, 'podcast:locked')),
+      locked: RssPodcastIndexLocked.parse(
+          findElementOrNull(element, 'podcast:locked')),
     );
   }
 }

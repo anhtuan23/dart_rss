@@ -17,7 +17,8 @@ class RssItemPodcastIndex {
 
   factory RssItemPodcastIndex.parse(XmlElement element) {
     return RssItemPodcastIndex(
-      chapters: RssPodcastIndexChapters.parse(findElementOrNull(element, 'podcast:chapters')),
+      chapters: RssPodcastIndexChapters.parse(
+          findElementOrNull(element, 'podcast:chapters')),
       transcripts: element.findElements('podcast:transcript').map((e) {
         return RssPodcastIndexTranscript.parse(e);
       }).toList(),

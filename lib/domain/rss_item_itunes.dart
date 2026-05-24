@@ -48,7 +48,9 @@ class RssItemItunes {
       title: findElementOrNull(element, 'itunes:title')?.innerText.trim(),
       episode: episodeStr == null ? null : int.tryParse(episodeStr),
       season: seasonStr == null ? null : int.tryParse(seasonStr),
-      duration: durationStr == null ? null : parseDuration(durationStr),
+      duration: durationStr == null || durationStr.isEmpty
+          ? null
+          : parseDuration(durationStr),
       episodeType: newRssItunesEpisodeType(
           findElementOrNull(element, 'itunes:episodeType')),
       author: findElementOrNull(element, 'itunes:author')?.innerText.trim(),

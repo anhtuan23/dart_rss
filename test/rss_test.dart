@@ -374,6 +374,31 @@ void main() {
     expect(item.itunes!.title, 'awesome title');
     expect(item.itunes!.block, false);
   });
+
+  test('parse empty iTunes numeric item fields as null', () {
+    const xmlString = '''
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+  <channel>
+    <title>Podcast</title>
+    <item>
+      <itunes:title>episode title</itunes:title>
+      <itunes:episode></itunes:episode>
+      <itunes:season></itunes:season>
+      <itunes:duration></itunes:duration>
+    </item>
+  </channel>
+</rss>
+''';
+
+    final feed = RssFeed.parse(xmlString);
+    final item = feed.items.single;
+
+    expect(item.itunes!.title, 'episode title');
+    expect(item.itunes!.episode, isNull);
+    expect(item.itunes!.season, isNull);
+    expect(item.itunes!.duration, isNull);
+  });
+
   test('parse RSS-PodcastIndex-R1.xml', () {
     var xmlString = File('test/xml/RSS-PodcastIndex-R1.xml').readAsStringSync();
 

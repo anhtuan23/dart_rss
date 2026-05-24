@@ -2,16 +2,11 @@ import 'dart:core';
 
 import 'package:dart_rss/domain/dublin_core/dublin_core.dart';
 import 'package:dart_rss/domain/rss1_item.dart';
+import 'package:dart_rss/domain/syndication/syndication.dart';
 import 'package:dart_rss/util/helpers.dart';
 import 'package:xml/xml.dart';
 
-enum UpdatePeriod {
-  hourly,
-  daily,
-  weekly,
-  monthly,
-  yearly,
-}
+export 'package:dart_rss/domain/syndication/syndication.dart' show UpdatePeriod;
 
 class Rss1Feed {
   final String? title;
@@ -36,23 +31,6 @@ class Rss1Feed {
     this.dc,
   });
 
-  static UpdatePeriod? _parseUpdatePeriod(String? updatePeriodString) {
-    switch (updatePeriodString) {
-      case 'hourly':
-        return UpdatePeriod.hourly;
-      case 'daily':
-        return UpdatePeriod.daily;
-      case 'weekly':
-        return UpdatePeriod.weekly;
-      case 'monthly':
-        return UpdatePeriod.monthly;
-      case 'yearly':
-        return UpdatePeriod.yearly;
-      default:
-        return null;
-    }
-  }
-
   factory Rss1Feed.parse(String xmlString) {
     final document = XmlDocument.parse(xmlString);
     XmlElement rdfElement;
@@ -73,7 +51,7 @@ class Rss1Feed {
           .toList(),
       image:
           findElementOrNull(rdfElement, 'image')?.getAttribute('rdf:resource'),
-      updatePeriod: _parseUpdatePeriod(
+      updatePeriod: parseUpdatePeriod(
           findElementOrNull(rdfElement, 'sy:updatePeriod')?.innerText),
       updateFrequency: parseInt(
           findElementOrNull(rdfElement, 'sy:updateFrequency')?.innerText),

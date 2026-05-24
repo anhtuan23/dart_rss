@@ -6,6 +6,7 @@ import 'package:dart_rss/domain/rss_category.dart';
 import 'package:dart_rss/domain/rss_cloud.dart';
 import 'package:dart_rss/domain/rss_image.dart';
 import 'package:dart_rss/domain/rss_item.dart';
+import 'package:dart_rss/domain/syndication/syndication.dart';
 import 'package:dart_rss/util/helpers.dart';
 import 'package:xml/xml.dart';
 
@@ -35,6 +36,9 @@ class RssFeed {
   final DublinCore? dc;
   final RssItunes? itunes;
   final RssPodcastIndex? podcastIndex;
+  final UpdatePeriod? updatePeriod;
+  final int? updateFrequency;
+  final DateTime? updateBase;
 
   const RssFeed({
     this.title,
@@ -59,6 +63,9 @@ class RssFeed {
     this.dc,
     this.itunes,
     this.podcastIndex,
+    this.updatePeriod,
+    this.updateFrequency,
+    this.updateBase,
   });
 
   factory RssFeed.parse(String xmlString) {
@@ -111,6 +118,12 @@ class RssFeed {
       dc: DublinCore.parse(channelElement),
       itunes: RssItunes.parse(channelElement),
       podcastIndex: RssPodcastIndex.parse(channelElement),
+      updatePeriod: parseUpdatePeriod(
+          findElementOrNull(channelElement, 'sy:updatePeriod')?.innerText),
+      updateFrequency: parseInt(
+          findElementOrNull(channelElement, 'sy:updateFrequency')?.innerText),
+      updateBase: parseDateTime(
+          findElementOrNull(channelElement, 'sy:updateBase')?.innerText),
     );
   }
 }

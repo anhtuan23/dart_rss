@@ -399,6 +399,36 @@ void main() {
     expect(item.itunes!.duration, isNull);
   });
 
+  test('parse RSS 2.0 syndication module', () {
+    const xmlString = '''
+<rss xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" version="2.0">
+  <channel>
+    <title>Meerkat</title>
+    <link>http://meerkat.oreillynet.com</link>
+    <description>Meerkat: An Open Wire Service</description>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>2</sy:updateFrequency>
+    <sy:updateBase>2001-01-01T12:01+00:00</sy:updateBase>
+    <item>
+      <title>XML: A Disruptive Technology</title>
+      <link>http://c.moreover.com/click/here.pl?r123</link>
+      <description>XML is placing increasingly heavy loads on the existing technical infrastructure of the Internet.</description>
+    </item>
+  </channel>
+</rss>
+''';
+
+    final feed = RssFeed.parse(xmlString);
+
+    expect(feed.title, 'Meerkat');
+    expect(feed.link, 'http://meerkat.oreillynet.com');
+    expect(feed.description, 'Meerkat: An Open Wire Service');
+    expect(feed.updatePeriod, UpdatePeriod.hourly);
+    expect(feed.updateFrequency, 2);
+    expect(feed.updateBase, DateTime.parse('2001-01-01T12:01+00:00'));
+    expect(feed.items.single.title, 'XML: A Disruptive Technology');
+  });
+
   test('parse RSS-PodcastIndex-R1.xml', () {
     var xmlString = File('test/xml/RSS-PodcastIndex-R1.xml').readAsStringSync();
 

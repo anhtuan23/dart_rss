@@ -9,14 +9,14 @@ import 'package:xml/xml.dart';
 class AtomItem {
   final String? id;
   final String? title;
-  final String? updated;
+  final DateTime? updated;
 
   final List<AtomPerson> authors;
   final List<AtomLink> links;
   final List<AtomCategory> categories;
   final List<AtomPerson> contributors;
   final AtomSource? source;
-  final String? published;
+  final DateTime? published;
   final String? content;
   final String? summary;
   final String? rights;
@@ -42,7 +42,7 @@ class AtomItem {
     return AtomItem(
       id: findElementOrNull(element, 'id')?.innerText,
       title: findElementOrNull(element, 'title')?.innerText,
-      updated: findElementOrNull(element, 'updated')?.innerText,
+      updated: parseDateTime(findElementOrNull(element, 'updated')?.innerText),
       authors: element
           .findElements('author')
           .map((element) => AtomPerson.parse(element))
@@ -60,7 +60,8 @@ class AtomItem {
           .map((element) => AtomPerson.parse(element))
           .toList(),
       source: AtomSource.parse(findElementOrNull(element, 'source')),
-      published: findElementOrNull(element, 'published')?.innerText,
+      published:
+          parseDateTime(findElementOrNull(element, 'published')?.innerText),
       content: findElementOrNull(element, 'content')?.innerText,
       summary: findElementOrNull(element, 'summary')?.innerText,
       rights: findElementOrNull(element, 'rights')?.innerText,

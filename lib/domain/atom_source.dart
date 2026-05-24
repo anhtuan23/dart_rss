@@ -4,7 +4,7 @@ import 'package:xml/xml.dart';
 class AtomSource {
   final String? id;
   final String? title;
-  final String? updated;
+  final DateTime? updated;
 
   const AtomSource(this.id, this.title, this.updated);
 
@@ -14,7 +14,8 @@ class AtomSource {
     }
     final id = findElementOrNull(element, 'id')?.innerText;
     final title = findElementOrNull(element, 'title')?.innerText;
-    final updated = findElementOrNull(element, 'updated')?.innerText;
+    final updated =
+        parseDateTime(findElementOrNull(element, 'updated')?.innerText);
     return AtomSource(id, title, updated);
   }
 }

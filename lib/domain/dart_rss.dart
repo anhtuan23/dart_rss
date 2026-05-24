@@ -1,31 +1,12 @@
 import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
 import 'package:dart_rss/domain/rss1_feed.dart';
+import 'package:dart_rss/util/helpers.dart' as helpers;
 import 'package:xml/xml.dart' as xml;
-import 'package:intl/intl.dart';
 
 extension SafeParseDateTime on DateTime {
   static DateTime? safeParse(String? str) {
-    if (str == null) {
-      return null;
-    }
-    const dateFormatPatterns = [
-      'EEE, d MMM yyyy HH:mm:ss Z',
-      'EEE, d MMM yyyy',
-    ];
-    try {
-      return DateTime.parse(str);
-    } on FormatException {
-      for (final pattern in dateFormatPatterns) {
-        try {
-          final format = DateFormat(pattern);
-          return format.parse(str);
-        } on FormatException {
-          continue;
-        }
-      }
-    }
-    return null;
+    return helpers.parseDateTime(str);
   }
 }
 
@@ -77,7 +58,7 @@ class WebFeed {
             (item) => WebFeedItem(
               title: item.title ?? item.dc?.title ?? '',
               body: item.description ?? item.dc?.description ?? '',
-              updated: SafeParseDateTime.safeParse(item.dc?.date),
+              updated: item.dc?.date,
               links: [item.link],
             ),
           )
@@ -95,8 +76,7 @@ class WebFeed {
             (item) => WebFeedItem(
               title: item.title ?? item.dc?.title ?? '',
               body: item.description ?? item.dc?.description ?? '',
-              updated: SafeParseDateTime.safeParse(item.pubDate) ??
-                  SafeParseDateTime.safeParse(item.dc?.date),
+              updated: item.pubDate ?? item.dc?.date,
               links: [item.link],
             ),
           )
@@ -114,8 +94,7 @@ class WebFeed {
             (item) => WebFeedItem(
               title: item.title ?? '',
               body: item.summary ?? item.content ?? '',
-              updated: SafeParseDateTime.safeParse(item.updated) ??
-                  SafeParseDateTime.safeParse(item.published),
+              updated: item.updated ?? item.published,
               links: item.links.map((atomLink) => atomLink.href).toList(),
             ),
           )

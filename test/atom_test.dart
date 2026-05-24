@@ -24,7 +24,7 @@ void main() {
 
     expect(feed.id, 'foo-bar-id');
     expect(feed.title, 'Foo bar news');
-    expect(feed.updated, '2018-04-06T13:02:46Z');
+    expect(feed.updated, DateTime.parse('2018-04-06T13:02:46Z'));
 
     expect(feed.links.length, 2);
     expect(feed.links.first.rel, 'foo');
@@ -62,7 +62,7 @@ void main() {
     final item = feed.items.first;
     expect(item.id, 'foo-bar-entry-id-1');
     expect(item.title, 'Foo bar item 1');
-    expect(item.updated, '2018-04-06T13:02:47Z');
+    expect(item.updated, DateTime.parse('2018-04-06T13:02:47Z'));
 
     expect(item.authors.length, 2);
     expect(item.authors.first.name, 'Ellie');
@@ -87,7 +87,7 @@ void main() {
     expect(item.contributors.first.uri, 'http://foo.bar.news/people/gin');
     expect(item.contributors.first.email, 'gin@foo.bar.news');
 
-    expect(item.published, '2018-04-06T13:02:49Z');
+    expect(item.published, DateTime.parse('2018-04-06T13:02:49Z'));
     expect(item.summary, 'This is summary 1');
     expect(item.content, 'This is content 1');
     expect(item.rights, 'This is rights 1');
@@ -98,7 +98,7 @@ void main() {
     final feed = AtomFeed.parse(xmlString);
     expect(feed.id, 'foo-bar-id');
     expect(feed.title, 'Foo bar news');
-    expect(feed.updated, '2018-04-06T13:02:46Z');
+    expect(feed.updated, DateTime.parse('2018-04-06T13:02:46Z'));
 
     expect(feed.items.length, 1);
 

@@ -76,7 +76,7 @@ void main() {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit');
     expect(feed.items.first.link, 'https://foo.bar.news/1');
     expect(feed.items.first.guid, 'https://foo.bar.news/1?guid');
-    expect(feed.items.first.pubDate, 'Mon, 26 Mar 2018 14:00:00 PDT');
+    expect(feed.items.first.pubDate, DateTime.utc(2018, 3, 26, 21));
     expect(feed.items.first.categories.first.domain, 'news');
     expect(feed.items.first.categories.first.value, 'Lorem');
     expect(feed.items.first.author, 'alice@foo.bar.news');
@@ -106,7 +106,7 @@ void main() {
     final item = feed.items.first;
     expect(item.title, null);
     expect(item.link, 'http://www.foo.com');
-    expect(item.pubDate, 'Mon, 27 Aug 2001 16:08:56 PST');
+    expect(item.pubDate, DateTime.utc(2001, 8, 28, 0, 8, 56));
 
     expect(item.media, isNotNull);
     expect(item.media!.group, isNotNull);
@@ -246,7 +246,7 @@ void main() {
     expect(feed.dc!.description, 'description');
     expect(feed.dc!.publisher, 'publisher');
     expect(feed.dc!.contributor, 'contributor');
-    expect(feed.dc!.date, '2000-01-01T12:00+00:00');
+    expect(feed.dc!.date, DateTime.parse('2000-01-01T12:00+00:00'));
     expect(feed.dc!.type, 'type');
     expect(feed.dc!.format, 'format');
     expect(feed.dc!.identifier, 'identifier');
@@ -263,7 +263,10 @@ void main() {
     expect(feed.items.first.dc!.description, 'description');
     expect(feed.items.first.dc!.publisher, 'publisher');
     expect(feed.items.first.dc!.contributor, 'contributor');
-    expect(feed.items.first.dc!.date, '2000-01-01T12:00+00:00');
+    expect(
+      feed.items.first.dc!.date,
+      DateTime.parse('2000-01-01T12:00+00:00'),
+    );
     expect(feed.items.first.dc!.type, 'type');
     expect(feed.items.first.dc!.format, 'format');
     expect(feed.items.first.dc!.identifier, 'identifier');
@@ -272,6 +275,36 @@ void main() {
     expect(feed.items.first.dc!.relation, 'relation');
     expect(feed.items.first.dc!.coverage, 'coverage');
     expect(feed.items.first.dc!.rights, 'rights');
+  });
+
+  test('parse Dublin Core created and modified dates', () {
+    const xmlString = '''
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>Feed</title>
+    <dc:created>2000-01-01T12:00+00:00</dc:created>
+    <dc:modified>2000-01-02T12:00+00:00</dc:modified>
+    <item>
+      <title>Item</title>
+      <dc:created>2000-01-03T12:00+00:00</dc:created>
+      <dc:modified>2000-01-04T12:00+00:00</dc:modified>
+    </item>
+  </channel>
+</rss>
+''';
+
+    final feed = RssFeed.parse(xmlString);
+
+    expect(feed.dc!.created, DateTime.parse('2000-01-01T12:00+00:00'));
+    expect(feed.dc!.modified, DateTime.parse('2000-01-02T12:00+00:00'));
+    expect(
+      feed.items.single.dc!.created,
+      DateTime.parse('2000-01-03T12:00+00:00'),
+    );
+    expect(
+      feed.items.single.dc!.modified,
+      DateTime.parse('2000-01-04T12:00+00:00'),
+    );
   });
 
   test('parse RSS-Empty.xml', () {

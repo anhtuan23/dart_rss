@@ -91,8 +91,7 @@ void main() {
         rss2Feed.items.first.body,
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
       );
-      expect(rss2Feed.items.first.updated,
-          DateTime.parse('2018-03-26 14:00:00.000'));
+      expect(rss2Feed.items.first.updated, DateTime.utc(2018, 3, 26, 21));
     });
   });
 }

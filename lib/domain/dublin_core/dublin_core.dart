@@ -9,7 +9,9 @@ class DublinCore {
   final List<String> subjects;
   final String? publisher;
   final String? contributor;
-  final String? date;
+  final DateTime? date;
+  final DateTime? created;
+  final DateTime? modified;
   final String? type;
   final String? format;
   final String? identifier;
@@ -28,6 +30,8 @@ class DublinCore {
     this.publisher,
     this.contributor,
     this.date,
+    this.created,
+    this.modified,
     this.type,
     this.format,
     this.identifier,
@@ -50,7 +54,11 @@ class DublinCore {
           : subjects.map((subjectElement) => subjectElement.innerText).toList(),
       publisher: findElementOrNull(element, 'dc:publisher')?.innerText,
       contributor: findElementOrNull(element, 'dc:contributor')?.innerText,
-      date: findElementOrNull(element, 'dc:date')?.innerText,
+      date: parseDateTime(findElementOrNull(element, 'dc:date')?.innerText),
+      created:
+          parseDateTime(findElementOrNull(element, 'dc:created')?.innerText),
+      modified:
+          parseDateTime(findElementOrNull(element, 'dc:modified')?.innerText),
       type: findElementOrNull(element, 'dc:type')?.innerText,
       format: findElementOrNull(element, 'dc:format')?.innerText,
       identifier: findElementOrNull(element, 'dc:identifier')?.innerText,

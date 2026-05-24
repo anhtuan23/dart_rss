@@ -9,7 +9,7 @@ import 'package:xml/xml.dart';
 class AtomFeed {
   final String? id;
   final String? title;
-  final String? updated;
+  final DateTime? updated;
   final List<AtomItem> items;
 
   final List<AtomLink> links;
@@ -50,7 +50,8 @@ class AtomFeed {
     return AtomFeed(
       id: findElementOrNull(feedElement, 'id')?.innerText,
       title: findElementOrNull(feedElement, 'title')?.innerText,
-      updated: findElementOrNull(feedElement, 'updated')?.innerText,
+      updated:
+          parseDateTime(findElementOrNull(feedElement, 'updated')?.innerText),
       items: feedElement
           .findElements('entry')
           .map((element) => AtomItem.parse(element))

@@ -14,12 +14,14 @@ extension SafeParseDateTime on DateTime {
     ];
     try {
       return DateTime.parse(str);
-    } catch (_) {
+    } on FormatException {
       for (final pattern in dateFormatPatterns) {
         try {
           final format = DateFormat(pattern);
           return format.parse(str);
-        } catch (_) {}
+        } on FormatException {
+          continue;
+        }
       }
     }
     return null;

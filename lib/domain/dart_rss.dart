@@ -11,6 +11,7 @@ extension SafeParseDateTime on DateTime {
     }
     const dateFormatPatterns = [
       'EEE, d MMM yyyy HH:mm:ss Z',
+      'EEE, d MMM yyyy',
     ];
     try {
       return DateTime.parse(str);

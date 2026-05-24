@@ -20,6 +20,14 @@ void main() {
       expect(date.day, 2);
     });
 
+    test('it can parse shortened RFC 822 dates', () {
+      final date = SafeParseDateTime.safeParse('Tue, 04 Aug 2020')!;
+
+      expect(date.year, 2020);
+      expect(date.month, 8);
+      expect(date.day, 4);
+    });
+
     test('incorrect date returns null', () {
       final date = SafeParseDateTime.safeParse('Tue 12');
       expect(date, null);
